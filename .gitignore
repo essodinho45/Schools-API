@@ -14,4 +14,4 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
-success-13225-firebase-adminsdk-m2ebo-6b0f2814e8.json
+/secrets
