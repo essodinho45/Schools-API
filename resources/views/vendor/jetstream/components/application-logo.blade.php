@@ -1,1 +1,1 @@
-<img src="\images\icon.png">
+<img src="\images\icon.png" class="w-16">
