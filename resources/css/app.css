@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.btn {
+    @apply font-bold py-2 px-4 rounded;
+}
+
+.btn-blue {
+    @apply bg-blue-500 text-white;
+}
+
+.btn-blue:hover {
+    @apply bg-blue-700;
+}
+
+.btn-teal {
+    @apply bg-teal-700 text-white;
+}
+
+.btn-teal:hover {
+    @apply bg-teal-900;
+}
+
+[dir="rtl"] .form-select {
+    background-position: left 0.5rem center;
+}
+
+/* For those who use it direct */
+
+[dir="rtl"] select {
+    background-position: left 0.5rem center;
+}
+
+[dir="rtl"] #pag_next {
+    transform: scaleX(-1);
+}
+
+[dir="rtl"] #pag_prev {
+    transform: scaleX(-1);
+}

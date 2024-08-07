@@ -1,0 +1,143 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Student;
+use App\Models\StudentPoints;
+use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
+
+class PointsController extends Controller
+{
+    public function addStudentPoints(Request $request)
+    {
+        try {
+            if ($request->has('guid')) {
+                $kh_guid = $request->input('guid');
+            }
+            if ($request->has('student_code')) {
+                $student_code = $request->input('student_code');
+            }
+            if ($request->has('school_code')) {
+                $school_code = $request->input('school_code');
+            }
+            if ($request->has('name')) {
+                $remark = $request->input('name');
+            }
+            if ($request->has('pcount')) {
+                $points = $request->input('pcount');
+            }
+            if ($request->has('d1')) {
+                $d1 = $request->input('d1');
+            }
+            if ($request->has('d2')) {
+                $d2 = $request->input('d2');
+            }
+            if ($request->has('date')) {
+                $date = $request->input('date');
+            }
+            $student = Student::where('school-code', $school_code)->where('code', $student_code)->first();
+            if (!$student)
+                throw new \Exception('student not found');
+            $points = StudentPoints::create([
+                'kh_guid' => $kh_guid,
+                'student_id' => $student->id,
+                'student-code' => $student_code,
+                'school-code' => $school_code,
+                'remark' => $remark,
+                'points' => $points,
+                'date' => $date,
+                'd1' => $d1 == 'true' ? 1 : 0,
+                'd2' => $d2 == 'true' ? 1 : 0,
+            ]);
+            return response('success', 200);
+        } catch (\Throwable $e) {
+            Log::info(\json_encode($e));
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function getStudentPoints(Request $request)
+    {
+        try {
+            if ($request->has('school_code')) {
+                $school_code = $request->input('school_code');
+            }
+            $points_q = StudentPoints::where('school-code', $school_code);
+            if ($request->has('student_code')) {
+                $student_code = $request->input('student_code');
+                $points_q->where('student-code', $student_code);
+            }
+            $data = false;
+            if ($request->has('data')) {
+                $data = $request->input('data');
+                if ($data == 'mobile')
+                    $data = 'is_sent';
+                $points_q->where($data, 0);
+            }
+            $points = $points_q->get();
+            if (!$points || empty($points))
+                throw new \Exception('no points found');
+            if ($data && $data != 'is_sent') {
+                $update_points = $points;
+                foreach ($update_points as $point) {
+                    $point->update([$data => 1]);
+                }
+            }
+            return (\json_encode($points, JSON_UNESCAPED_UNICODE));
+        } catch (\Throwable $e) {
+            Log::info(\json_encode($e));
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function markAsSent(Request $request)
+    {
+        try {
+            $user = auth()->user();
+            $students = Student::where('user_id', $user->id)->pluck('id');
+            $condition = [['is_sent', '=', false]];
+
+            if ($request->has('student')) {
+                $student = $request->input('student');
+                array_push($condition, ['student-code', '=', (string) $student]);
+            }
+            if ($request->has('school')) {
+                $school = $request->input('school');
+                array_push($condition, ['school-code', '=', (string) $school]);
+            }
+
+            if ($request->input('date')) {
+                $date = Carbon::createFromFormat('Y-m-d H:i:s', $request->input('date'));
+                \Log::info('activity');
+                \Log::info($request->input('date'));
+                \Log::info($date->toTimeString());
+                \Log::info($date->toDateString());
+            }
+
+            //get ids of marked remarks
+            $updatedPoints = StudentPoints::whereIn('student_id', $students)
+                ->where($condition)
+                ->where('date', '<=', $date)
+                ->pluck('id');
+
+            //mark remarks as sent
+            $points = StudentPoints::whereIn('id', $updatedPoints)->update(['is_sent' => true]);
+
+            //return updated remarks
+            $points = StudentPoints::whereIn('id', $updatedPoints)->get();
+            return (\json_encode($points, JSON_UNESCAPED_UNICODE));
+        } catch (\Throwable $e) {
+            Log::info(\json_encode($e));
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+}
