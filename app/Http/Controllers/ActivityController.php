@@ -74,11 +74,11 @@ class ActivityController extends Controller
             $activity = Activity::where('id', $activity_id)->first();
             $student = Student::where('school-code', $school_code)->where('code', $student_code)->first();
             if ($student->points()->where('activity_id', $activity_id)->exists())
-                throw new \Exception('لقد تم الاشتراك بهذا النشاط مسبقاً.');
+                throw new \Exception('joined');
             if ($activity->max > 0 && $activity->count >= $activity->max)
-                throw new \Exception('اكتمل عدد الطلاب المسجلين بالنشاط.');
+                throw new \Exception('full');
             if ($student->points()->sum('points') < $activity->points)
-                throw new \Exception('ليس لديك العدد الكافي من النقاط للاشتراك.');
+                throw new \Exception('no_points');
             $points = StudentPoints::create([
                 'kh_guid' => Str::uuid(),
                 'student_id' => $student->id,
