@@ -40,17 +40,21 @@ class PointsController extends Controller
             $student = Student::where('school-code', $school_code)->where('code', $student_code)->first();
             if (!$student)
                 throw new \Exception('student not found');
-            $points = StudentPoints::create([
-                'kh_guid' => $kh_guid,
-                'student_id' => $student->id,
-                'student-code' => $student_code,
-                'school-code' => $school_code,
-                'remark' => $remark,
-                'points' => $points,
-                'date' => $date,
-                'd1' => $d1 == 'true' ? 1 : 0,
-                'd2' => $d2 == 'true' ? 1 : 0,
-            ]);
+            $points = StudentPoints::updateOrCreate(
+                [
+                    'kh_guid' => $kh_guid
+                ],
+                [
+                    'student_id' => $student->id,
+                    'student-code' => $student_code,
+                    'school-code' => $school_code,
+                    'remark' => $remark,
+                    'points' => $points,
+                    'date' => $date,
+                    'd1' => $d1 == 'true' ? 1 : 0,
+                    'd2' => $d2 == 'true' ? 1 : 0,
+                ]
+            );
             return response('success', 200);
         } catch (\Throwable $e) {
             Log::info(\json_encode($e));
