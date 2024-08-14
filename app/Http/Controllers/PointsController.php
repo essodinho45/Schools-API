@@ -92,7 +92,7 @@ class PointsController extends Controller
                     $data = 'is_sent';
                 $points_q->where($data, 0);
             }
-            $points = $points_q->get();
+            $points = $points_q->orderBy('date', 'ASC')->get();
             if (!$points || empty($points))
                 throw new \Exception('no points found');
             if ($data && $data != 'is_sent') {
