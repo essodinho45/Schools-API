@@ -69,8 +69,18 @@ class PointsController extends Controller
         try {
             if ($request->has('school_code')) {
                 $school_code = $request->input('school_code');
+                $points_q = StudentPoints::where('school-code', $school_code);
+            } else {
+                $user = auth()->user();
+                $students = Student::where('user_id', $user->id)->pluck('id');
+                $points_q = StudentPoints::whereIn('student_id', $students)
+                    ->whereRelation('student', 'freezed', '<>', true);
+                if ($request->has('sent')) {
+                    $is_sent = $request->input('sent');
+                    if (!$is_sent)
+                        $points_q->where('is_sent', 0);
+                }
             }
-            $points_q = StudentPoints::where('school-code', $school_code);
             if ($request->has('student_code')) {
                 $student_code = $request->input('student_code');
                 $points_q->where('student-code', $student_code);
