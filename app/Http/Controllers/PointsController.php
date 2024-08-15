@@ -7,6 +7,7 @@ use App\Models\Student;
 use App\Models\StudentPoints;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use Response;
 
 class PointsController extends Controller
 {
@@ -71,7 +72,9 @@ class PointsController extends Controller
                 $school_code = $request->input('school_code');
                 $points_q = StudentPoints::where('school-code', $school_code);
             } else {
-                $user = auth()->user();
+                $user = auth('sanctum')->user();
+                if (!$user)
+                    return Response::json(['message' => 'Unauthenticated.'], 401);
                 $students = Student::where('user_id', $user->id)->pluck('id');
                 $points_q = StudentPoints::whereIn('student_id', $students)
                     ->whereRelation('student', 'freezed', '<>', true);
