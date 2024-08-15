@@ -71,7 +71,7 @@ class PointsController extends Controller
                 $school_code = $request->input('school_code');
                 $points_q = StudentPoints::where('school-code', $school_code);
             } else {
-                $user = auth()->user();
+                $user = auth('api')->user();
                 $students = Student::where('user_id', $user->id)->pluck('id');
                 $points_q = StudentPoints::whereIn('student_id', $students)
                     ->whereRelation('student', 'freezed', '<>', true);
