@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class StudentPoints extends Model
 {
     use HasFactory;
+    protected $dateFormat = 'Y-m-d H:i:s';
     protected $fillable = [
         'kh_guid',
         'student_id',
@@ -34,9 +35,5 @@ class StudentPoints extends Model
     public function activity(): BelongsTo
     {
         return $this->belongsTo(Activity::class);
-    }
-    public function getCreatedAtColumn()
-    {
-        return date('Y-m-d H:i:s', $this->created_at);
     }
 }
