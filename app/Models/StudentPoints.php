@@ -35,4 +35,8 @@ class StudentPoints extends Model
     {
         return $this->belongsTo(Activity::class);
     }
+    public function getCreatedAtColumn()
+    {
+        return date('Y-m-d H:i:s', $this->created_at);
+    }
 }
