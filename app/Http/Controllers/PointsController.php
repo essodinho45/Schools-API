@@ -54,6 +54,7 @@ class PointsController extends Controller
                     'date' => $date,
                     'd1' => $d1 == 'true' ? 1 : 0,
                     'd2' => $d2 == 'true' ? 1 : 0,
+                    'is_sent' => false
                 ]
             );
             return response('success', 200);
@@ -140,7 +141,7 @@ class PointsController extends Controller
             //get ids of marked remarks
             $updatedPoints = StudentPoints::whereIn('student_id', $students)
                 ->where($condition)
-                ->where('date', '<=', $date)
+                ->where('created_at', '<=', $date)
                 ->pluck('id');
 
             //mark remarks as sent
