@@ -140,7 +140,7 @@ class PointsController extends Controller
             //get ids of marked remarks
             $updatedPoints = StudentPoints::whereIn('student_id', $students)
                 ->where($condition)
-                ->where('date', '<=', $date)
+                ->where('created_at', '<=', $date)
                 ->pluck('id');
 
             //mark remarks as sent
