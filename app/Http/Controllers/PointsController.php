@@ -54,6 +54,7 @@ class PointsController extends Controller
                     'date' => $date,
                     'd1' => $d1 == 'true' ? 1 : 0,
                     'd2' => $d2 == 'true' ? 1 : 0,
+                    'is_sent' => false
                 ]
             );
             return response('success', 200);
