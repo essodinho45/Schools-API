@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -9,7 +10,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class StudentPoints extends Model
 {
     use HasFactory;
-    protected $dateFormat = 'Y-m-d H:i:s';
     protected $fillable = [
         'kh_guid',
         'student_id',
@@ -35,5 +35,11 @@ class StudentPoints extends Model
     public function activity(): BelongsTo
     {
         return $this->belongsTo(Activity::class);
+    }
+    protected function createdAt(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value, $attributes) => date('Y-m-d H:i:s', strtotime($attributes['created_at'])),
+        );
     }
 }

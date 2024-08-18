@@ -26,6 +26,7 @@ class Activities extends Component
     public function mount()
     {
         $this->classes = Student::where('school-code', auth()->user()->school_code)->select('class')->distinct()->get()->toArray();
+        array_unshift($this->classes, ['class' => '']);
         if (count($this->classes)) {
             $this->classrooms = Student::where('school-code', auth()->user()->school_code)->where('class', $this->classes[0])->select('classroom')->distinct()->get()->toArray();
             array_unshift($this->classrooms, ['classroom' => '']);
@@ -63,8 +64,8 @@ class Activities extends Component
             'remark' => 'required',
             'max' => 'required',
             'points' => 'required',
-            'class' => 'required',
-            'classroom' => 'required',
+            'class' => 'sometimes',
+            'classroom' => 'sometimes',
             'end_date' => 'required',
         ];
     }

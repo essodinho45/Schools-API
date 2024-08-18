@@ -26,10 +26,10 @@ class ActivityController extends Controller
             $classroom = $student->classroom;
             $activities_q
                 ->where(function ($q) use ($class) {
-                    $q->where('class', $class)->orWhere('class', null);
+                    $q->where('class', $class)->orWhere('class', '');
                 })
                 ->where(function ($q) use ($classroom) {
-                    $q->where('classroom', $classroom)->orWhere('classroom', null);
+                    $q->where('classroom', $classroom)->orWhere('classroom', '');
                 });
             $activities = $activities_q->get();
             $total_points = $student->points()->sum('points') ?? 0;
@@ -82,6 +82,7 @@ class ActivityController extends Controller
             $points = StudentPoints::create([
                 'kh_guid' => Str::uuid(),
                 'student_id' => $student->id,
+                'date' => date('Y-m-d'),
                 'student-code' => $student_code,
                 'school-code' => $school_code,
                 'remark' => $activity->title . ' - ' . $activity->remark,
