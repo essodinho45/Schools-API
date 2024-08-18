@@ -47,8 +47,8 @@
                         <td class="px-6 py-4 text-sm whitespace-no-wrap">{{ $activity->id }}</td>
                         <td class="px-6 py-4 text-sm whitespace-no-wrap">{{ $activity->title }}</td>
                         <td class="px-6 py-4 text-sm whitespace-no-wrap">{{ $activity->remark }}</td>
-                        <td class="px-6 py-4 text-sm whitespace-no-wrap">{{ $activity->class }}</td>
-                        <td class="px-6 py-4 text-sm whitespace-no-wrap">{{ $activity->classroom }}</td>
+                        <td class="px-6 py-4 text-sm whitespace-no-wrap">{{ $activity->class ?: 'جميع الصفوف' }}</td>
+                        <td class="px-6 py-4 text-sm whitespace-no-wrap">{{ $activity->classroom ?: 'جميع الشعب' }}</td>
                         <td class="px-6 py-4 text-sm whitespace-no-wrap">{{ $activity->points }}</td>
                         <td class="px-6 py-4 text-sm whitespace-no-wrap">{{ $activity->max }}</td>
                         <td class="px-6 py-4 text-sm whitespace-no-wrap">{{ $activity->count }}</td>
@@ -101,7 +101,7 @@
                     class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mt-1 block w-full">
                     @foreach ($classes as $class_val)
                         <option value="{{ $class_val['class'] }}" @if ($class_val['class'] == $class) selected @endif>
-                            {{ $class_val['class'] }}</option>
+                            {{ $class_val['class'] ? $class_val['class'] : 'جميع الصفوف' }}</option>
                     @endforeach
                 </select>
             </div>
