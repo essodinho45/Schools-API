@@ -112,7 +112,10 @@ class Activities extends Component
         $this->classroom = NULL;
         $this->end_date = NULL;
     }
-
+    public function showStudents($id)
+    {
+        return redirect()->to('./' . 'activity/' . $id . '/students');
+    }
     // public function changePassword()
     // {
     //     $validated_data = $this->validate([
