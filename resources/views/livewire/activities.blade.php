@@ -2,9 +2,11 @@
 
     <div class="flex items-center justify-between px-4 py-3 text-right sm:px-6">
 
-        <x-jet-button wire:click="createShowModal">
-            {{ __('Create') }}
-        </x-jet-button>
+        @if(auth()->user()->school_code != null)
+            <x-jet-button wire:click="createShowModal">
+                {{ __('Create') }}
+            </x-jet-button>
+        @endif
     </div>
     {{-- <x-jet-input id="search" type="text" class="mt-1 block w-full" placeholder="{{ __('Search') }}"
         wire:model="searchTerm" /> --}}

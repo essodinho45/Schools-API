@@ -17,6 +17,11 @@ class Points extends Component
     public $date_from;
     public $date_to;
 
+    public function mount()
+    {
+        if (!auth()->user()->is_admin && !auth()->user()->school->use_points)
+            abort('401', 'Unauthorized');
+    }
     public function read()
     {
         $searchTerm = '%' . $this->searchTerm . '%';

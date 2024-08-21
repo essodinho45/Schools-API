@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\StudentPoints;
 use Illuminate\Support\Facades\Log;
+use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Messaging\Notification;
+use App\Models\User;
 use Carbon\Carbon;
 use Response;
 
@@ -57,7 +60,27 @@ class PointsController extends Controller
                     'is_sent' => false
                 ]
             );
-            return response('success', 200);
+            $FcmToken = User::where('id', $student->user_id)->where('freezed', '<>', true)->get()[0]->device_key;
+            if ($FcmToken == null)
+                return response('success', 200);
+            // return response()->json([
+            //     'status' => true,
+            //     'message' => 'No Device Token for User, Remark saved but not sent'
+            // ], 200);
+            try {
+                $messaging = app('firebase.messaging');
+                $message = CloudMessage::withTarget('token', $FcmToken)
+                    ->withNotification(Notification::create('تمت إضافة نقاط', $remark));
+                // ->withData(['key' => 'value']);
+
+                $messaging->send($message);
+                return response('success', 200);
+            } catch (\Throwable $e) {
+                Log::info('FCM exception:');
+                Log::info('======================================');
+                Log::info($e->getMessage());
+                throw new \Exception('firebase exception');
+            }
         } catch (\Throwable $e) {
             Log::info(\json_encode($e));
             return response()->json([

@@ -25,6 +25,8 @@ class Activities extends Component
 
     public function mount()
     {
+        if (!auth()->user()->is_admin && !auth()->user()->school->use_points)
+            abort('401', 'Unauthorized');
         $this->classes = Student::where('school-code', auth()->user()->school_code)->select('class')->distinct()->get()->toArray();
         array_unshift($this->classes, ['class' => '']);
         if (count($this->classes)) {

@@ -64,7 +64,7 @@
                         <td class="px-6 py-4 text-sm whitespace-no-wrap">{{ $point->student->classroom }}</td>
                         <td class="px-6 py-4 text-sm whitespace-no-wrap">{{ $point->remark }}</td>
                         <td class="px-6 py-4 text-sm whitespace-no-wrap">{{ $point->points }}</td>
-                        <td class="px-6 py-4 text-sm whitespace-no-wrap">{{ $remark->date }}</td>
+                        <td class="px-6 py-4 text-sm whitespace-no-wrap">{{ $point->date }}</td>
                         <td class="px-6 py-4 text-sm whitespace-no-wrap">
                             <input type="checkbox"
                                 class="rounded border-gray-300 text-indigo-800 shadow-sm focus:ring-indigo-800" disabled
