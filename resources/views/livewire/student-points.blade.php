@@ -1,20 +1,6 @@
 <div class="p-6">
-    <div class="flex">
-        <x-jet-input id="search" type="text" class="my-1 mx-1 w-1/3" placeholder="{{ __('Search') }}"
-            wire:model="searchTerm" />
-        <x-jet-input id="date_from" type="text" class="my-1 mx-1 w-1/3" placeholder="{{ __('Date From') }}"
-            wire:model="date_from" onfocus="(this.type='date')" onblur="(this.type='text')" />
-        <x-jet-input id="date_to" type="text" class="my-1 mx-1 w-1/3" placeholder="{{ __('Date To') }}"
-            wire:model="date_to" onfocus="(this.type='date')" onblur="(this.type='text')" />
-    </div>
-    <div class="flex">
-        <x-jet-input id="name" type="text" class="my-1 mx-1 w-1/3" placeholder="{{ __('Student') }}"
-            wire:model="name" />
-        <x-jet-input id="class" type="text" class="my-1 mx-1 w-1/3" placeholder="{{ __('Class') }}"
-            wire:model="class" />
-        <x-jet-input id="classroom" type="text" class="my-1 mx-1 w-1/3" placeholder="{{ __('Classroom') }}"
-            wire:model="classroom" />
-    </div>
+    <x-jet-input id="search" type="text" class="mt-1 block w-full" placeholder="{{ __('Search') }}"
+        wire:model="searchTerm" />
     <table class="w-full divide-y divide-gray-200">
         <thead class="bg-white border-b">
             <tr>
@@ -42,15 +28,6 @@
                 <th
                     class="px-6 py-3 bg-gray-50 @if (\App::isLocale('ar')) text-right @else text-left @endif text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                     {{ __('Date') }}</th>
-                {{-- <th
-                    class="px-6 py-3 bg-gray-50 @if (\App::isLocale('ar')) text-right @else text-left @endif text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                    {{ __('d1') }}</th>
-                <th
-                    class="px-6 py-3 bg-gray-50 @if (\App::isLocale('ar')) text-right @else text-left @endif text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                    {{ __('d2') }}</th>
-                <th
-                    class="px-6 py-3 bg-gray-50 @if (\App::isLocale('ar')) text-right @else text-left @endif text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                    {{ __('Notified') }}</th> --}}
             </tr>
         </thead>
         <tbody class="bg-white devide-y devide-gray-200">
@@ -65,26 +42,11 @@
                         <td class="px-6 py-4 text-sm whitespace-no-wrap">{{ $point->remark }}</td>
                         <td class="px-6 py-4 text-sm whitespace-no-wrap">{{ $point->points }}</td>
                         <td class="px-6 py-4 text-sm whitespace-no-wrap">{{ $point->date }}</td>
-                        {{-- <td class="px-6 py-4 text-sm whitespace-no-wrap">
-                            <input type="checkbox"
-                                class="rounded border-gray-300 text-indigo-800 shadow-sm focus:ring-indigo-800" disabled
-                                @if ($point->{'d1'}) checked @endif>
-                        </td>
-                        <td class="px-6 py-4 text-sm whitespace-no-wrap">
-                            <input type="checkbox"
-                                class="rounded border-gray-300 text-indigo-800 shadow-sm focus:ring-indigo-800" disabled
-                                @if ($point->{'d2'}) checked @endif>
-                        </td>
-                        <td class="px-6 py-4 text-sm whitespace-no-wrap">
-                            <input type="checkbox"
-                                class="rounded border-gray-300 text-indigo-800 shadow-sm focus:ring-indigo-800" disabled
-                                @if ($point->{'is_sent'}) checked @endif>
-                        </td> --}}
                     </tr>
                 @endforeach
             @else
                 <tr>
-                    <td class="px-6 py-4 text-sm text-center" colspan="11">
+                    <td class="px-6 py-4 text-sm text-center" colspan="7">
                         {{ __('No data to show.') }}
                     </td>
                 </tr>
@@ -93,4 +55,9 @@
     </table>
     {{ $data->links('vendor.livewire.tailwind') }}
 
+    <div class="flex items-center justify-end px-4 py-3 text-right sm:px-6">
+        <x-jet-button wire:click="back">
+            {{ __('Back') }}
+        </x-jet-button>
+    </div>
 </div>

@@ -30,6 +30,13 @@
                                     {{ __('Unfreeze') }}
                                 @endif
                             </button>
+                            <button class="btn btn-blue" wire:click="usePoints({{ $school->id }})">
+                                @if (!$school->use_points)
+                                    {{ __('Use Points') }}
+                                @else
+                                    {{ __('Stop Points') }}
+                                @endif
+                            </button>
                         </td>
                     </tr>
                 @endforeach

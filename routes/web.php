@@ -110,6 +110,10 @@ Route::group(
             $student = Student::find($id);
             return view('admin.remarks', ['student' => $student]);
         })->name('studentRemarks');
+        Route::get('/{id}/points', function ($id) {
+            $student = Student::find($id);
+            return view('admin.student-points', ['student' => $student]);
+        })->name('studentPoints');
 
         Route::get('activity/{id}/students', function ($id) {
             $activity = Activity::find($id);

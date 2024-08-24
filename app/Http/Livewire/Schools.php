@@ -13,8 +13,8 @@ class Schools extends Component
     public $searchTerm;
     public function read()
     {
-        $searchTerm = '%'.$this->searchTerm.'%';
-        Return School::where('name', 'like', $searchTerm)->paginate(10);
+        $searchTerm = '%' . $this->searchTerm . '%';
+        return School::where('name', 'like', $searchTerm)->paginate(10);
     }
 
     public function render()
@@ -29,6 +29,12 @@ class Schools extends Component
     {
         $current = School::find($id);
         $current->freezed = !$current->freezed;
+        $current->save();
+    }
+    public function usePoints($id)
+    {
+        $current = School::find($id);
+        $current->use_points = !$current->use_points;
         $current->save();
     }
 }

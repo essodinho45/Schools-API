@@ -67,10 +67,12 @@ class PointsController extends Controller
             //     'status' => true,
             //     'message' => 'No Device Token for User, Remark saved but not sent'
             // ], 200);
+            $title = mb_convert_encoding($student->school->name, 'UTF-8', 'UTF-8');
+            $body = mb_convert_encoding($remark, 'UTF-8', 'UTF-8');
             try {
                 $messaging = app('firebase.messaging');
                 $message = CloudMessage::withTarget('token', $FcmToken)
-                    ->withNotification(Notification::create('تمت إضافة نقاط', $remark));
+                    ->withNotification(Notification::create($title, $body));
                 // ->withData(['key' => 'value']);
 
                 $messaging->send($message);
