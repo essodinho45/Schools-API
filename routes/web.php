@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Activity;
 use App\Models\Student;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -101,11 +102,23 @@ Route::group(
         Route::get('/activities', function () {
             return view('admin.activities');
         })->name('activities');
+        Route::get('/points', function () {
+            return view('admin.points');
+        })->name('points');
 
         Route::get('/{id}/remarks', function ($id) {
             $student = Student::find($id);
             return view('admin.remarks', ['student' => $student]);
         })->name('studentRemarks');
+        Route::get('/{id}/points', function ($id) {
+            $student = Student::find($id);
+            return view('admin.student-points', ['student' => $student]);
+        })->name('studentPoints');
+
+        Route::get('activity/{id}/students', function ($id) {
+            $activity = Activity::find($id);
+            return view('admin.activity-students', ['activity' => $activity]);
+        })->name('activityStudents');
 
         Route::get('/all-remarks', function () {
             return view('admin.all-remarks');

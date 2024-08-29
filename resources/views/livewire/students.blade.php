@@ -39,6 +39,11 @@
                             <button class="btn btn-teal" wire:click="showRemarks({{ $student->id }})">
                                 {{ __('Show Remarks') }}
                             </button>
+                            @if($student->school->use_points)
+                                <button class="btn btn-teal" wire:click="showPoints({{ $student->id }})">
+                                    {{ __('Show Points') }}
+                                </button>
+                            @endif
                             <button class="btn btn-blue" wire:click="freeze({{ $student->id }})">
                                 @if (!$student->freezed)
                                     {{ __('Freeze') }}

@@ -2,9 +2,11 @@
 
     <div class="flex items-center justify-between px-4 py-3 text-right sm:px-6">
 
-        <x-jet-button wire:click="createShowModal">
-            {{ __('Create') }}
-        </x-jet-button>
+        @if(auth()->user()->school_code != null)
+            <x-jet-button wire:click="createShowModal">
+                {{ __('Create') }}
+            </x-jet-button>
+        @endif
     </div>
     {{-- <x-jet-input id="search" type="text" class="mt-1 block w-full" placeholder="{{ __('Search') }}"
         wire:model="searchTerm" /> --}}
@@ -38,6 +40,9 @@
                 <th
                     class="px-6 py-3 bg-gray-50 @if (\App::isLocale('ar')) text-right @else text-left @endif text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                     {{ __('End Date') }}</th>
+                <th
+                    class="px-6 py-3 bg-gray-50 @if (\App::isLocale('ar')) text-left @else text-right @endif text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                </th>
             </tr>
         </thead>
         <tbody class="devide-y devide-gray-200">
@@ -53,6 +58,12 @@
                         <td class="px-6 py-4 text-sm whitespace-no-wrap">{{ $activity->max }}</td>
                         <td class="px-6 py-4 text-sm whitespace-no-wrap">{{ $activity->count }}</td>
                         <td class="px-6 py-4 text-sm whitespace-no-wrap">{{ $activity->end_date }}</td>
+                        <td class="px-6 py-4 text-sm text-right">
+                            <button class="btn btn-teal" wire:click="showStudents({{ $activity->id }})">
+                                {{ __('Show Students') }}
+                            </button>
+                        </td>
+
                     </tr>
                 @endforeach
             @else

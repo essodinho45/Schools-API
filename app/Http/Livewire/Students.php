@@ -107,6 +107,10 @@ class Students extends Component
     {
         return redirect()->to('/' . $id . '/remarks');
     }
+    public function showPoints($id)
+    {
+        return redirect()->to('/' . $id . '/points');
+    }
 
     public function freeze($id)
     {

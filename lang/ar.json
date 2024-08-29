@@ -9,6 +9,8 @@
     "Search": "البحث",
     "Show only users without login token.": "إظهار المستخدمين بدون تسجيل دخول فقط.",
     "Remarks For Student: ": "ملاحظات الطالب: ",
+    "Points For Student: ": "نقاط الطالب: ",
+    "Total Points: ": "مجموع النقاط: ",
     "Title": "العنوان",
     "Date": "التاريخ",
     "Category": "التصنيف",
@@ -77,5 +79,10 @@
     "Date From": "من تاريخ",
     "Date To": "إلى تاريخ",
     "Notified": "تم الإشعار",
+    "Show Students": "الطلاب المشتركين",
+    "Use Points": "استخدام النقاط",
+    "Stop Points": "إيقاف النقاط",
+    "Show Points": "عرض النقاط",
+    "Students For Activity: ": "الطلاب المشتركين بالنشاط: ",
     "Password": "كلمة المرور"
 }

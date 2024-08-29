@@ -17,18 +17,20 @@ class AuthController extends Controller
      * @param Request $request
      * @return User
      */
-    public function createUser(Request $request,Faker $faker)
+    public function createUser(Request $request, Faker $faker)
     {
         try {
             //Validated
-            $validateUser = Validator::make($request->all(),
-            [
-                'phone' => 'required|unique:users,name',
-                //'email' => 'required|email|unique:users,email',
-                'password' => 'required'
-            ]);
+            $validateUser = Validator::make(
+                $request->all(),
+                [
+                    'phone' => 'required|unique:users,name',
+                    //'email' => 'required|email|unique:users,email',
+                    'password' => 'required'
+                ]
+            );
 
-            if($validateUser->fails()){
+            if ($validateUser->fails()) {
                 return response()->json([
                     'status' => false,
                     'message' => 'validation error',
@@ -64,13 +66,15 @@ class AuthController extends Controller
     public function loginUser(Request $request)
     {
         try {
-            $validateUser = Validator::make($request->all(),
-            [
-                'phone' => 'required',
-                'password' => 'required'
-            ]);
+            $validateUser = Validator::make(
+                $request->all(),
+                [
+                    'phone' => 'required',
+                    'password' => 'required'
+                ]
+            );
 
-            if($validateUser->fails()){
+            if ($validateUser->fails()) {
                 return response()->json([
                     'status' => false,
                     'message' => 'validation error',
@@ -79,15 +83,14 @@ class AuthController extends Controller
             }
 
             $user = User::firstWhere('name', $request['phone']);
-            if($user == NULL)
-            {
+            if ($user == NULL) {
                 return response()->json([
                     'status' => false,
                     'message' => 'Phone & Password does not match with our record.',
                 ], 401);
             }
 
-            if(($user->freezed == true)){
+            if (($user->freezed == true)) {
                 $user->tokens()->delete();
                 return response()->json([
                     'status' => false,
@@ -95,7 +98,7 @@ class AuthController extends Controller
                 ], 401);
             }
 
-            if(!Auth::attempt(['email'=>$user->email, 'password'=>$request->password])){
+            if (!Auth::attempt(['email' => $user->email, 'password' => $request->password])) {
                 return response()->json([
                     'status' => false,
                     'message' => 'Phone & Password does not match with our record.',
@@ -121,13 +124,15 @@ class AuthController extends Controller
     public function changePassword(Request $request)
     {
         try {
-            $validateUser = Validator::make($request->all(),
-            [
-                'old_password' => 'required',
-                'new_password' => 'required'
-            ]);
+            $validateUser = Validator::make(
+                $request->all(),
+                [
+                    'old_password' => 'required',
+                    'new_password' => 'required'
+                ]
+            );
 
-            if($validateUser->fails()){
+            if ($validateUser->fails()) {
                 return response()->json([
                     'status' => false,
                     'message' => 'validation error',
@@ -136,15 +141,14 @@ class AuthController extends Controller
             }
 
             $user = auth()->user();
-            if(!(Hash::check($request->old_password, $user->password)))
-            {
+            if (!(Hash::check($request->old_password, $user->password))) {
                 return response()->json([
                     'status' => false,
                     'message' => 'Old password does not match current user.',
                 ], 401);
             }
             $user->password = Hash::make($request->new_password);
-            if(!$user->save()){
+            if (!$user->save()) {
                 return response()->json([
                     'status' => false,
                     'message' => 'An error occured. User has not been saved.',
@@ -170,12 +174,14 @@ class AuthController extends Controller
     public function addDeviceKey(Request $request)
     {
         try {
-            $validateUser = Validator::make($request->all(),
-            [
-                'device_key' => 'required'
-            ]);
+            $validateUser = Validator::make(
+                $request->all(),
+                [
+                    'device_key' => 'required'
+                ]
+            );
 
-            if($validateUser->fails()){
+            if ($validateUser->fails()) {
                 return response()->json([
                     'status' => false,
                     'message' => 'validation error',
@@ -183,22 +189,24 @@ class AuthController extends Controller
                 ], 401);
             }
 
-            $old_device_user = User::where('device_key' ,$request->device_key)->first();
-            if($old_device_user != null)
-            {
-                $old_device_user->device_key = null;
-                $old_device_user->save();
-            }
-
+            $old_device_user = User::where('device_key', $request->device_key)->first();
             $user = auth()->user();
-            $user->device_key = $request->device_key;
-            if(!$user->save()){
-                return response()->json([
-                    'status' => false,
-                    'message' => 'An error occured. Key has not been saved.',
-                ], 401);
+            if ($old_device_user != null) {
+                if ($old_device_user->id != $user->id) {
+                    $old_device_user->device_key = null;
+                    $old_device_user->save();
+                }
             }
 
+            if ($user->device_key != $request->device_key) {
+                $user->device_key = $request->device_key;
+                if (!$user->save()) {
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'An error occured. Key has not been saved.',
+                    ], 401);
+                }
+            }
             return response()->json([
                 'status' => true,
                 'message' => 'Device key added.'
@@ -219,7 +227,7 @@ class AuthController extends Controller
 
             $user = auth()->user();
             $user->device_key = NULL;
-            if(!$user->save()){
+            if (!$user->save()) {
                 return response()->json([
                     'status' => false,
                     'message' => 'An error occured. Key has not been saved.',
@@ -240,7 +248,8 @@ class AuthController extends Controller
         }
     }
 
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
         $user = User::where('name', $request->input('phone'))->first();
         $user->tokens()->delete();
         return response()->json([
@@ -249,7 +258,8 @@ class AuthController extends Controller
         ], 200);
     }
 
-    public function freezeUser(Request $request){
+    public function freezeUser(Request $request)
+    {
         $user = User::where('name', $request->input('phone'))->first();
         $user->freezed = true;
         $user->save();

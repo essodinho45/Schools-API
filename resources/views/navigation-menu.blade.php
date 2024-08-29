@@ -46,13 +46,20 @@
                             {{ __('Remarks Percent') }}
                         </x-jet-nav-link>
                     </div>
+                    @if (auth()->user()->school->use_points)
+                    <div
+                        class="hidden space-x-8 sm:-my-px @if (App::isLocale('ar')) sm:mr-10 @else sm:ml-10 @endif sm:flex">
+                        <x-jet-nav-link href="{{ route('points') }}" :active="request()->routeIs('points')">
+                            {{ __('Points') }}
+                        </x-jet-nav-link>
+                    </div>
                     <div
                         class="hidden space-x-8 sm:-my-px @if (App::isLocale('ar')) sm:mr-10 @else sm:ml-10 @endif sm:flex">
                         <x-jet-nav-link href="{{ route('activities') }}" :active="request()->routeIs('activities')">
                             {{ __('Activities') }}
                         </x-jet-nav-link>
                     </div>
-
+                    @endif
                 @endif
 
                 @if (auth()->user()->is_admin)
@@ -82,6 +89,13 @@
 
                         <x-jet-nav-link href="{{ route('remarksPercent') }}" :active="request()->routeIs('remarksPercent')">
                             {{ __('Remarks Percent') }}
+                        </x-jet-nav-link>
+                    </div>
+                    <div
+                        class="hidden space-x-8 sm:-my-px @if (App::isLocale('ar')) sm:mr-10 @else sm:ml-10 @endif sm:flex">
+
+                        <x-jet-nav-link href="{{ route('points') }}" :active="request()->routeIs('points')">
+                            {{ __('Points') }}
                         </x-jet-nav-link>
                     </div>
                     <div

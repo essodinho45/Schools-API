@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\StudentPoints;
 use Illuminate\Support\Facades\Log;
+use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Messaging\Notification;
+use App\Models\User;
 use Carbon\Carbon;
+use Response;
 use Response;
 
 class PointsController extends Controller
@@ -57,7 +61,29 @@ class PointsController extends Controller
                     'is_sent' => false
                 ]
             );
-            return response('success', 200);
+            $FcmToken = User::where('id', $student->user_id)->where('freezed', '<>', true)->get()[0]->device_key;
+            if ($FcmToken == null)
+                return response('success', 200);
+            // return response()->json([
+            //     'status' => true,
+            //     'message' => 'No Device Token for User, Remark saved but not sent'
+            // ], 200);
+            $title = mb_convert_encoding($student->school->name, 'UTF-8', 'UTF-8');
+            $body = mb_convert_encoding($remark, 'UTF-8', 'UTF-8');
+            try {
+                $messaging = app('firebase.messaging');
+                $message = CloudMessage::withTarget('token', $FcmToken)
+                    ->withNotification(Notification::create($title, $body));
+                // ->withData(['key' => 'value']);
+
+                $messaging->send($message);
+                return response('success', 200);
+            } catch (\Throwable $e) {
+                Log::info('FCM exception:');
+                Log::info('======================================');
+                Log::info($e->getMessage());
+                throw new \Exception('firebase exception');
+            }
         } catch (\Throwable $e) {
             Log::info(\json_encode($e));
             return response()->json([
@@ -84,6 +110,19 @@ class PointsController extends Controller
                 $is_sent = $request->input('sent');
                 if (!$is_sent)
                     $points_q->where('is_sent', 0);
+                $points_q = StudentPoints::where('school-code', $school_code);
+            } else {
+                $user = auth('sanctum')->user();
+                if (!$user)
+                    return Response::json(['message' => 'Unauthenticated.'], 401);
+                $students = Student::where('user_id', $user->id)->pluck('id');
+                $points_q = StudentPoints::whereIn('student_id', $students)
+                    ->whereRelation('student', 'freezed', '<>', true);
+            }
+            if ($request->has('sent')) {
+                $is_sent = $request->input('sent');
+                if (!$is_sent)
+                    $points_q->where('is_sent', 0);
             }
             if ($request->has('student_code')) {
                 $student_code = $request->input('student_code');
@@ -96,7 +135,7 @@ class PointsController extends Controller
                     $data = 'is_sent';
                 $points_q->where($data, 0);
             }
-            $points = $points_q->orderBy('date', 'ASC')->get();
+            $points = $points_q->orderBy('date', 'ASC')->orderBy('date', 'ASC')->get();
             if (!$points || empty($points))
                 throw new \Exception('no points found');
             if ($data && $data != 'is_sent') {
