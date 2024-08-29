@@ -3,7 +3,12 @@
 namespace App\Http\Livewire;
 
 use App\Models\Activity;
+use App\Models\School;
+use Illuminate\Support\Facades\Log;
 use App\Models\Student;
+use App\Models\User;
+use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Messaging\Notification;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -93,6 +98,7 @@ class Activities extends Component
 
     public function create()
     {
+        $school_code = auth()->user()->school_code;
         $validated_data = $this->validate();
         Activity::create([
             'title' => $validated_data['title'],
@@ -103,8 +109,31 @@ class Activities extends Component
             'classroom' => $validated_data['classroom'],
             'end_date' => $validated_data['end_date'],
             'count' => 0,
-            'school-code' => auth()->user()->school_code,
+            'school-code' => $school_code,
         ]);
+        $users_q = Student::where('school-code', $school_code);
+        $school = School::where('code', $school_code)->first();
+        if (!empty($validated_data['class']))
+            $users_q->where('class', $validated_data['class']);
+        if (!empty($validated_data['classroom']))
+            $users_q->where('classroom', $validated_data['classroom']);
+        $user_ids = $users_q->select('user_id')->distinct()->pluck('user_id')->all();
+        $user_tokens = User::whereIn('id', $user_ids)->whereNotNull('device_key')->pluck('device_key')->all();
+        foreach ($user_tokens as $token) {
+            $title = mb_convert_encoding($validated_data['title'], 'UTF-8', 'UTF-8');
+            try {
+                $messaging = app('firebase.messaging');
+                $message = CloudMessage::withTarget('token', $token)
+                    ->withNotification(Notification::create($school->name, $title));
+                // ->withData(['key' => 'value']);
+
+                $messaging->send($message);
+            } catch (\Throwable $e) {
+                Log::info('FCM exception:');
+                Log::info('======================================');
+                Log::info($e->getMessage());
+            }
+        }
         $this->modalFormVisible = false;
         $this->text = NULL;
         $this->remark = NULL;

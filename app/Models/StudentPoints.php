@@ -42,4 +42,10 @@ class StudentPoints extends Model
             get: fn($value, $attributes) => date('Y-m-d H:i:s', strtotime($attributes['created_at'])),
         );
     }
+    protected function points(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value, $attributes) => strval($attributes['points']),
+        );
+    }
 }
