@@ -11,7 +11,6 @@ use Kreait\Firebase\Messaging\Notification;
 use App\Models\User;
 use Carbon\Carbon;
 use Response;
-use Response;
 
 class PointsController extends Controller
 {
