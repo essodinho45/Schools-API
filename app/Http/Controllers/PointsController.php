@@ -109,19 +109,6 @@ class PointsController extends Controller
                 $is_sent = $request->input('sent');
                 if (!$is_sent)
                     $points_q->where('is_sent', 0);
-                $points_q = StudentPoints::where('school-code', $school_code);
-            } else {
-                $user = auth('sanctum')->user();
-                if (!$user)
-                    return Response::json(['message' => 'Unauthenticated.'], 401);
-                $students = Student::where('user_id', $user->id)->pluck('id');
-                $points_q = StudentPoints::whereIn('student_id', $students)
-                    ->whereRelation('student', 'freezed', '<>', true);
-            }
-            if ($request->has('sent')) {
-                $is_sent = $request->input('sent');
-                if (!$is_sent)
-                    $points_q->where('is_sent', 0);
             }
             if ($request->has('student_code')) {
                 $student_code = $request->input('student_code');
@@ -134,7 +121,7 @@ class PointsController extends Controller
                     $data = 'is_sent';
                 $points_q->where($data, 0);
             }
-            $points = $points_q->orderBy('date', 'ASC')->orderBy('date', 'ASC')->get();
+            $points = $points_q->orderBy('date', 'ASC')->get();
             if (!$points || empty($points))
                 throw new \Exception('no points found');
             if ($data && $data != 'is_sent') {
