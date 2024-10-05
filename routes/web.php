@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Session;
 */
 
 Route::get('/', function () {
-    return redirect(route('dashboard'));
+    return view('welcome');
 });
 
 Route::get('/policy', function () {
