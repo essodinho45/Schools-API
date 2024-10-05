@@ -16,8 +16,11 @@ use Illuminate\Support\Facades\Session;
 |
 */
 
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 Route::get('/', function () {
-    return view('welcome');
+    return redirect(route('dashboard'));
 });
 
 Route::get('/policy', function () {
