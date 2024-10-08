@@ -44,17 +44,17 @@
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-3 md:w-7/12 w-11/12 justify-self-center">
                 <div class="m-2 p-2 sm:m-3 sm:p-5">
-                    <a href="https://play.google.com/store/apps/details?id=com.alkhazen.success" target="_blank">
+                    <a href="https://play.google.com/store/apps/details?id=com.alkhazen.alqadam_alsharif_school" target="_blank">
                         <img src="\images\Google-Play-Logo.png">
                     </a>
                 </div>
                 <div class="m-2 p-2 sm:m-3 sm:p-5">
-                    <a href="https://apps.apple.com/se/app/success/id1665818282?l=en" target="_blank">
+                    {{-- <a href="https://apps.apple.com/se/app/success/id1665818282?l=en" target="_blank">
                         <img class="max-w-full" src="\images\apple-app-store-logo.png">
-                    </a>
+                    </a> --}}
                 </div>
                 <div class="m-2 p-2 sm:m-3 sm:p-5">
-                    <a href="\storage\app-release.apk">
+                    <a href="\storage\app-alqadam_alsharif_school-release.apk">
                         <img class="max-w-full" src="\images\apk-logo.png">
                     </a>
                 </div>
