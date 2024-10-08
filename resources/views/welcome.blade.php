@@ -49,7 +49,7 @@
                     </a>
                 </div>
                 <div class="m-2 p-2 sm:m-3 sm:p-5">
-                    <a href="#" target="_blank">
+                    <a href="https://apps.apple.com/se/app/%D8%A7%D9%84%D8%A8%D8%AF%D8%A7%D9%8A%D8%A9-%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF%D8%A9/id6720753766?l=en-GB" target="_blank">
                         <img class="max-w-full" src="\images\apple-app-store-logo.png">
                     </a>
                 </div>
