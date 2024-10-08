@@ -49,9 +49,9 @@
                     </a>
                 </div>
                 <div class="m-2 p-2 sm:m-3 sm:p-5">
-                    {{-- <a href="https://apps.apple.com/se/app/success/id1665818282?l=en" target="_blank">
+                    <a href="#" target="_blank">
                         <img class="max-w-full" src="\images\apple-app-store-logo.png">
-                    </a> --}}
+                    </a>
                 </div>
                 <div class="m-2 p-2 sm:m-3 sm:p-5">
                     <a href="\storage\app-albidaya_aljadida_school-release.apk">
