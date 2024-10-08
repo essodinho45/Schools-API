@@ -21,11 +21,11 @@
 </head>
 
 <body class="antialiased">
-    <div class="relative flex items-top justify-center min-h-screen bg-blue-900 sm:items-center py-4 sm:pt-0">
+    <div class="relative flex items-top justify-center min-h-screen bg-green-400 sm:items-center py-4 sm:pt-0">
         @if (Route::has('login'))
             <div class="block fixed top-0 right-0 px-6 py-4">
                 @auth
-                    <a href="{{ url('/dashboard') }}" class="text-sm text-cyan-300 underline">Dashboard</a>
+                    <a href="{{ url('/dashboard') }}" class="text-sm text-teal-300 underline">Dashboard</a>
                     {{-- <a href="{{ route('login') }}" class="text-sm text-cyan-300 underline">Log in</a> --}}
 
                     {{-- @if (Route::has('register'))
