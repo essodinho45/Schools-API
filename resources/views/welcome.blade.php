@@ -21,7 +21,7 @@
 </head>
 
 <body class="antialiased">
-    <div class="relative flex items-top justify-center min-h-screen bg-blue-900 sm:items-center py-4 sm:pt-0">
+    <div class="relative flex items-top justify-center min-h-screen bg-amber-500 sm:items-center py-4 sm:pt-0">
         @if (Route::has('login'))
             <div class="block fixed top-0 right-0 px-6 py-4">
                 @auth
@@ -38,9 +38,12 @@
         <div class="grid grid-cols-1">
             <div class="w-full flex justify-center">
                 <img src="\images\iconwhite.png" style="max-height: 10vh; max-width: 10vw;" class="my-5">
+                <p>أهلاً بكم في تطبيق مدرسة البداية الجديدة</p>
+                <br>
+                <p>يرجى متابعة الفيديو التوضيحي لطريقة تنصيب وتفعيل البرنامج على نظامَي IOS و Android</p>
             </div>
             <div class="grid grid-cols-1 justify-items-center">
-                <iframe class="aspect-video md:w-7/12 w-11/12" src="https://www.youtube.com/embed/DOHKEZ4LOfY?si=aWa6HcsCIXTEQSN5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <iframe class="aspect-video md:w-7/12 w-11/12" src="https://www.youtube.com/embed/1Fic6GHxj2E?si=ccapeY3eIlGgtt3B" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-3 md:w-7/12 w-11/12 justify-self-center">
                 <div class="m-2 p-2 sm:m-3 sm:p-5">
