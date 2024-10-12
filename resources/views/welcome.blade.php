@@ -39,9 +39,8 @@
             <div class="w-full flex justify-center">
                 <img src="\images\iconwhite.png" style="max-height: 10vh; max-width: 10vw;" class="my-5">
             </div>
-            <div class="text-white text-center">
+            <div class="text-white text-center text-lg" dir="rtl">
                 <p>أهلاً بكم في تطبيق مدرسة البداية الجديدة</p>
-                <br>
                 <p>يرجى متابعة الفيديو التوضيحي لطريقة تنصيب وتفعيل البرنامج على نظامَي IOS و Android</p>
             </div>
             <div class="grid grid-cols-1 justify-items-center">
