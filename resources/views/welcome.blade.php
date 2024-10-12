@@ -39,9 +39,10 @@
             <div class="w-full flex justify-center">
                 <img src="\images\iconwhite.png" style="max-height: 10vh; max-width: 10vw;" class="my-5">
             </div>
-            <div class="text-white text-center text-lg" dir="rtl">
+            <div class="text-white text-center text-lg font-bold" dir="rtl">
                 <p>أهلاً بكم في تطبيق مدرسة البداية الجديدة</p>
                 <p>يرجى متابعة الفيديو التوضيحي لطريقة تنصيب وتفعيل البرنامج على نظامَي IOS و Android</p>
+                <br>
             </div>
             <div class="grid grid-cols-1 justify-items-center">
                 <iframe class="aspect-video md:w-7/12 w-11/12" src="https://www.youtube.com/embed/1Fic6GHxj2E?si=ccapeY3eIlGgtt3B" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
