@@ -16,12 +16,12 @@ use Illuminate\Support\Facades\Session;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 Route::get('/', function () {
-    return redirect(route('dashboard'));
+    return view('welcome');
 });
+// Route::get('/', function () {
+//     return redirect(route('dashboard'));
+// });
 
 Route::get('/policy', function () {
     return view('success-privacy-policy');

@@ -21,11 +21,11 @@
 </head>
 
 <body class="antialiased">
-    <div class="relative flex items-top justify-center min-h-screen bg-blue-900 sm:items-center py-4 sm:pt-0">
+    <div class="relative flex items-top justify-center min-h-screen bg-green-500 sm:items-center py-4 sm:pt-0">
         @if (Route::has('login'))
             <div class="block fixed top-0 right-0 px-6 py-4">
                 @auth
-                    <a href="{{ url('/dashboard') }}" class="text-sm text-cyan-300 underline">Dashboard</a>
+                    <a href="{{ url('/dashboard') }}" class="text-sm text-teal-300 underline">Dashboard</a>
                     {{-- <a href="{{ route('login') }}" class="text-sm text-cyan-300 underline">Log in</a> --}}
 
                     {{-- @if (Route::has('register'))
@@ -40,7 +40,7 @@
                 <img src="\images\iconwhite.png" style="max-height: 10vh; max-width: 10vw;" class="my-5">
             </div>
             <div class="grid grid-cols-1 justify-items-center">
-                <iframe class="aspect-video md:w-7/12 w-11/12" src="https://www.youtube.com/embed/DOHKEZ4LOfY?si=aWa6HcsCIXTEQSN5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <iframe class="aspect-video md:w-7/12 w-11/12" src="https://www.youtube.com/embed/JoYWarm4Qbk?si=n9d7gHRU-Z9f7wTo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-3 md:w-7/12 w-11/12 justify-self-center">
                 <div class="m-2 p-2 sm:m-3 sm:p-5">
