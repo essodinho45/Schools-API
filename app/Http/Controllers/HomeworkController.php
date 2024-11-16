@@ -71,7 +71,7 @@ class HomeworkController extends Controller
                     $homework = Homework::firstOrCreate(
                         [
                             'student_id' => $student_id,
-                            'file-path' => url('/') . str_replace('public/files/homeworks-files', '/remarks', $path),
+                            'file-path' => url('/') . str_replace('public/files/homeworks-files', '/homeworks', $path),
                         ],
                         [
                             'date' => $date,
