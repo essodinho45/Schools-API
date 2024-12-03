@@ -15,6 +15,25 @@ use Illuminate\Support\Str;
 
 class HomeworkController extends Controller
 {
+    public function postHomeworkFileApi(Request $request)
+    {
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $allowedfileExtension = ['pdf', 'jpg', 'png', 'bmp'];
+            $extension = $file->getClientOriginalExtension();
+            $name = $file->getClientOriginalName();
+            $check = in_array($extension, $allowedfileExtension);
+            if ($check) {
+                $request_file = $request->file;
+                $path = $request_file->storeAs('public/files/homeworks-files' . (microtime(true) * 1000) . $name);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'invalid file'
+                ], 422);
+            }
+        }
+    }
     public function postHomeworkApi(Request $request)
     {
         if ($request->has('student_code')) {
@@ -38,28 +57,37 @@ class HomeworkController extends Controller
         if ($request->has('kh_guid')) {
             $kh_guid = $request->input('kh_guid');
         }
-
-        $path = NULL;
-
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $allowedfileExtension = ['pdf', 'jpg', 'png', 'bmp'];
-            $extension = $file->getClientOriginalExtension();
-            $name = $file->getClientOriginalName();
-            $check = in_array($extension, $allowedfileExtension);
-            if ($check) {
-                $is_image = 1;
-                if ($extension == 'pdf')
-                    $is_image = 0;
-                $request_file = $request->file;
-                $path = $request_file->storeAs('public/files/homeworks-files', $school_code . '-' . $name);
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'invalid file'
-                ], 422);
-            }
+        if ($request->has('subject')) {
+            $subject = $request->input('subject');
         }
+        $path = NULL;
+        $is_image = false;
+        if ($request->has('file_path')) {
+            $path = $request->input('file_path');
+            $is_image = !Str::endsWith($path, '.pdf');
+        }
+
+        // if ($request->hasFile('file')) {
+        //     $file = $request->file('file');
+        //     $allowedfileExtension = ['pdf', 'jpg', 'png', 'bmp'];
+        //     $extension = $file->getClientOriginalExtension();
+        //     $name = $file->getClientOriginalName();
+        //     $check = in_array($extension, $allowedfileExtension);
+        //     if ($check) {
+        //         $is_image = 1;
+        //         if ($extension == 'pdf')
+        //             $is_image = 0;
+        //         $request_file = $request->file;
+        //         $path = $request_file->storeAs('public/files/homeworks-files', $school_code . '-' . $name);
+        //         $url = url('/') . str_replace('public/files/homeworks-files', '/homeworks', $path);
+        //         return response($url, 200);
+        //     } else {
+        //         return response()->json([
+        //             'status' => false,
+        //             'message' => 'invalid file'
+        //         ], 422);
+        //     }
+        // }
 
         foreach ($student_codes as $student_code) {
             try {
@@ -71,13 +99,14 @@ class HomeworkController extends Controller
                     $homework = Homework::firstOrCreate(
                         [
                             'student_id' => $student_id,
-                            'file-path' => url('/') . str_replace('public/files/homeworks-files', '/homeworks', $path),
+                            'file-path' => $path,
                         ],
                         [
                             'date' => $date,
                             'kh_guid' => $kh_guid,
                             'school-code' => $school_code,
                             'student-code' => $student_code,
+                            'subject' => $subject,
                             'description' => $description,
                             'responses' => json_encode($responses, JSON_UNESCAPED_UNICODE),
                             'can_response' => $can_response,
@@ -95,6 +124,7 @@ class HomeworkController extends Controller
                             'kh_guid' => $kh_guid,
                             'school-code' => $school_code,
                             'student-code' => $student_code,
+                            'subject' => $subject,
                             'description' => $description,
                             'responses' => json_encode($responses, JSON_UNESCAPED_UNICODE),
                             'can_response' => $can_response,
