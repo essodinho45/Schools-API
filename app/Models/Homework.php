@@ -15,6 +15,7 @@ class Homework extends Model
         'student_id',
         'school-code',
         'student-code',
+        'subject',
         'description',
         'responses',
         'can_response',

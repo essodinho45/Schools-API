@@ -56,6 +56,7 @@ Route::middleware('auth:sanctum')->get('/markPointsAsSent', [PointsController::c
 
 //homeworks
 Route::post('/postHomework', [HomeworkController::class, 'postHomeworkApi'])->withoutMiddleware('throttle:api');
+Route::post('/postHomeworkFile', [HomeworkController::class, 'postHomeworkFileApi'])->withoutMiddleware('throttle:api');
 Route::middleware('auth:sanctum')->get('/getHomeworks', [HomeworkController::class, 'getHomeworksApi']);
 Route::middleware('auth:sanctum')->get('/markHomeworkAsRead', [HomeworkController::class, 'markAsRead']);
 Route::middleware('auth:sanctum')->get('/markHomeworkAsSent', [HomeworkController::class, 'markAsSent']);
