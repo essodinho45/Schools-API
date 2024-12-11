@@ -25,7 +25,7 @@ class HomeworkController extends Controller
             $check = in_array($extension, $allowedfileExtension);
             if ($check) {
                 $request_file = $request->file;
-                $path = $request_file->storeAs('public/files/homeworks-files' , (microtime(true) * 1000) . $name);
+                $path = $request_file->storeAs('public/files/homeworks-files' , (microtime(true) * 10000) . $name);
                 $url = url('/') . str_replace('public/files/homeworks-files', '/homeworks', $path);
                 return response($url, 200);
             } else {
