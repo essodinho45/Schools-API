@@ -55,7 +55,7 @@
                     </a> --}}
                 </div>
                 <div class="m-2 p-2 sm:m-3 sm:p-5">
-                    <a href="\storage\app-alfurqan_school-release.apk">
+                    <a href="\storage\app-abd_alqader_qwaider_school-release.apk">
                         <img class="max-w-full" src="\images\apk-logo.png">
                     </a>
                 </div>
