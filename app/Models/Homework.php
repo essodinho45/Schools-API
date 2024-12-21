@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Homework extends Model
 {
     use HasFactory;
+    protected $table = 'homeworks';
     protected $fillable = [
         'kh_guid',
         'date',
@@ -25,6 +26,7 @@ class Homework extends Model
         'is-read',
         'is-sent-firebase',
     ];
+
     public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class, 'student_id', 'id');
