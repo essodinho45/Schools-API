@@ -44,7 +44,7 @@
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-3 md:w-7/12 w-11/12 justify-self-center">
                 <div class="m-2 p-2 sm:m-3 sm:p-5">
-                    <a href="https://play.google.com/store/apps/details?id=com.alkhazen.alfurqan_school" target="_blank">
+                    <a href="https://play.google.com/store/apps/details?id=com.alkhazen.abd_alqader_qwaider_school" target="_blank">
                         <img src="\images\Google-Play-Logo.png">
                     </a>
                 </div>
