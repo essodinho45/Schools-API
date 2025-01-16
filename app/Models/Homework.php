@@ -36,4 +36,10 @@ class Homework extends Model
     {
         return $this->belongsTo(School::class, 'school-code', 'code');
     }
+    protected function createdAt(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value, $attributes) => date('Y-m-d H:i:s', strtotime($attributes['created_at'])),
+        );
+    }
 }
