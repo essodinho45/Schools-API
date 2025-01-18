@@ -43,4 +43,10 @@ class Homework extends Model
             get: fn($value, $attributes) => date('Y-m-d H:i:s', strtotime($attributes['created_at'])),
         );
     }
+    protected function responses(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value, $attributes) => json_decode($attributes['responses']),
+        );
+    }
 }
