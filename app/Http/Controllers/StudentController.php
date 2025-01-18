@@ -194,7 +194,8 @@ class StudentController extends Controller
     {
         try {
             $user = auth()->user();
-            $students = Student::where('user_id', $user->id)->where('freezed', '<>', true)
+            $students = Student::where('user_id', $user->id)
+                ->where('freezed', '<>', true)
                 ->whereRelation('school', 'freezed', '<>', true)
                 ->get();
             foreach ($students as $student) {

@@ -101,7 +101,10 @@ class PointsController extends Controller
                 $user = auth('sanctum')->user();
                 if (!$user)
                     return Response::json(['message' => 'Unauthenticated.'], 401);
-                $students = Student::where('user_id', $user->id)->pluck('id');
+                $students = Student::where('user_id', $user->id)
+                    ->where('freezed', '<>', true)
+                    ->whereRelation('school', 'freezed', '<>', true)
+                    ->pluck('id');
                 $points_q = StudentPoints::whereIn('student_id', $students)
                     ->whereRelation('student', 'freezed', '<>', true);
             }
