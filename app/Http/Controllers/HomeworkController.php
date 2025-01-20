@@ -25,7 +25,7 @@ class HomeworkController extends Controller
             $check = in_array($extension, $allowedfileExtension);
             if ($check) {
                 $request_file = $request->file;
-                $path = $request_file->storeAs('public/files/homeworks-files' , (microtime(true) * 10000) . $name);
+                $path = $request_file->storeAs('public/files/homeworks-files', (microtime(true) * 10000) . $name);
                 $url = url('/') . str_replace('public/files/homeworks-files', '/homeworks', $path);
                 return response($url, 200);
             } else {
@@ -102,10 +102,10 @@ class HomeworkController extends Controller
                         [
                             'student_id' => $student_id,
                             'file-path' => $path,
+                            'kh_guid' => $kh_guid,
                         ],
                         [
                             'date' => $date,
-                            'kh_guid' => $kh_guid,
                             'school-code' => $school_code,
                             'student-code' => $student_code,
                             'subject' => $subject,
