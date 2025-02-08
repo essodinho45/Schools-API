@@ -14,7 +14,7 @@ return new class extends Migration {
     {
         Schema::table('homeworks', function (Blueprint $table) {
             $table->string('response');
-            $table->date('response_date');
+            $table->date('response_date')->nullable()->default(null);
         });
     }
 
