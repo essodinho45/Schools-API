@@ -26,6 +26,8 @@ class Homework extends Model
         'is-sent',
         'is-read',
         'is-sent-firebase',
+        'response',
+        'response_date',
     ];
 
     public function student(): BelongsTo

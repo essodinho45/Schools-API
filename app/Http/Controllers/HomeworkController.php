@@ -340,4 +340,62 @@ class HomeworkController extends Controller
             ], 500);
         }
     }
+    public function setHomeworkResponseApi(Request $request)
+    {
+        if ($request->has('kh_guid')) {
+            $kh_guid = $request->input('kh_guid');
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'GUID is required'
+            ], 500);
+        }
+        if ($request->has('response')) {
+            $response = $request->input('response');
+        }
+        try {
+            $date = Carbon::now();
+            $homework = Homework::firstOrFail(['kh_guid' => $kh_guid]);
+            $student_user = Student::where('code', $homework->{'student-code'})
+                ->where('school-code', $homework->{'school-code'})->get()[0]->user_id;
+            $homework->response = $response;
+            $homework->response_date = $date;
+            $homework->{'is-sent'} = false;
+            $homework->{'is-read'} = false;
+            $homework->save();
+
+            $FcmToken = User::where('id', $student_user)->where('freezed', '<>', true)->get()[0]->device_key;
+            if ($FcmToken != null) {
+                try {
+                    $messaging = app('firebase.messaging');
+                    $message = CloudMessage::withTarget('token', $FcmToken)
+                        ->withNotification(Notification::create($title, $text));
+                    // ->withData(['key' => 'value']);
+
+                    $messaging->send($message);
+                } catch (\Throwable $e) {
+                    Log::info('FCM exception:');
+                    Log::info('======================================');
+                    Log::info($e->getMessage());
+                    throw new \Exception('firebase exception');
+                }
+            }
+
+            $homework->{'is-sent-firebase'} = true;
+            $homework->save();
+        } catch (\Throwable $e) {
+            DB::disconnect('mysql');
+            $message = $e->getMessage();
+            if (Str::contains($message, 'firebase exception'))
+                ;
+            else {
+                Log::info($e->getMessage());
+                return response()->json([
+                    'status' => false,
+                    'message' => $message
+                ], 500);
+            }
+        }
+        return response('success', 200);
+    }
 }
