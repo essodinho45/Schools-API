@@ -54,7 +54,8 @@ class HomeworkController extends Controller
             $responses = explode(",", $request->input('responses'));
         }
         if ($request->has('can_response')) {
-            $can_response = (bool) $request->input('can_response');
+            $can_response =
+                $request->input('can_response') == 'false' ? false : (bool) $request->input('can_response');
         }
         if ($request->has('kh_guid')) {
             $kh_guid = $request->input('kh_guid');
