@@ -125,7 +125,7 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
-    'api_base_url' => 'http://api.schools:8080/api/',
+    'api_base_url' => 'https://www.abdkaderkouder.com/api/',
 
     /*
     |--------------------------------------------------------------------------
@@ -158,9 +158,9 @@ return [
 
     'providers' => [
 
-            /*
-             * Laravel Framework Service Providers...
-             */
+        /*
+         * Laravel Framework Service Providers...
+         */
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
@@ -186,16 +186,16 @@ return [
         Kreait\Laravel\Firebase\ServiceProvider::class,
 
 
-            /*
-             * Package Service Providers...
-             */
+        /*
+         * Package Service Providers...
+         */
 
-            /*
-             * Application Service Providers...
-             */
+        /*
+         * Application Service Providers...
+         */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-            // App\Providers\BroadcastServiceProvider::class,
+        // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
