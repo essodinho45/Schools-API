@@ -117,6 +117,7 @@ class HomeworkController extends Controller
                             'is-sent' => false,
                             'is-read' => false,
                             'is-sent-firebase' => false,
+                            'response' => '',
                         ]
                     );
                 else
@@ -356,7 +357,7 @@ class HomeworkController extends Controller
         }
         try {
             $date = Carbon::now();
-            $homework = Homework::firstOrFail(['kh_guid' => $kh_guid]);
+            $homework = Homework::where('kh_guid', $kh_guid)->firstOrFail();
             $student_user = Student::where('code', $homework->{'student-code'})
                 ->where('school-code', $homework->{'school-code'})->get()[0]->user_id;
             $homework->response = $response;
