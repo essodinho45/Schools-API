@@ -136,6 +136,7 @@ class HomeworkController extends Controller
                             'is-sent' => false,
                             'is-read' => false,
                             'is-sent-firebase' => false,
+                            'response' => '',
                         ]
                     );
                 $FcmToken = User::where('id', $student_user)->where('freezed', '<>', true)->get()[0]->device_key;
@@ -399,5 +400,27 @@ class HomeworkController extends Controller
             }
         }
         return response('success', 200);
+    }
+
+    public function getHomeworksRespondedByUserApi(Request $request)
+    {
+        try {
+            $homeworks = Homework::where('response', '<>', '')
+                ->where('can_response', true)
+                ->where('response_read_by_admin', false)
+                ->orderBy('date', 'ASC')->get();
+            foreach($homeworks as $homework)
+            {
+                $homework->response_read_by_admin = true;
+                $homework->save();
+            }
+            return (\json_encode($homeworks, JSON_UNESCAPED_UNICODE));
+        } catch (\Throwable $e) {
+            Log::info(\json_encode($e));
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 }

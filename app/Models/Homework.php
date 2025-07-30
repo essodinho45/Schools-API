@@ -28,6 +28,7 @@ class Homework extends Model
         'is-sent-firebase',
         'response',
         'response_date',
+        'response_read_by_admin',
     ];
 
     public function student(): BelongsTo
