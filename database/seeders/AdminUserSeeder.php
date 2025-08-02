@@ -17,9 +17,9 @@ class AdminUserSeeder extends Seeder
     public function run()
     {
         User::firstOrCreate(
-            ['email' => 'admin@bidayatialjadida.net'],
+            ['email' => 'admin@baderaldeenschool.com'],
             [
-                'password' => Hash::make('Admin@Bidaya_2024'),
+                'password' => Hash::make('Admin@BadrAldeen_2025'),
                 'name' => 'Admin',
                 'freezed' => 0,
                 'is_admin' => 1
