@@ -125,7 +125,7 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
-    'api_base_url' => 'https://bidayatialjadida.net/api/',
+    'api_base_url' => 'https://alforqanschool.net/api/',
 
     /*
     |--------------------------------------------------------------------------
