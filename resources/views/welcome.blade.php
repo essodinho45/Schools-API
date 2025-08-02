@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Alforqan Web Application || مدرسة الفرقان</title>
+    <title>Badr Aldeen Al-Hasani Web Application || ثانوية الشيخ بدر الدين الحسني</title>
 
     <!-- Fonts -->
     <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -40,7 +40,7 @@
                 <img src="\images\iconwhite.png" style="max-height: 10vh; max-width: 10vw;" class="my-5">
             </div>
             <div class="text-white text-center text-lg font-bold" dir="rtl">
-                <p>أهلاً بكم في تطبيق مدرسة البداية الجديدة</p>
+                <p>أهلاً بكم في تطبيق ثانوية الشيخ بدر الدين الحسني</p>
                 <p>يرجى متابعة الفيديو التوضيحي لطريقة تنصيب وتفعيل البرنامج على نظامَي IOS و Android</p>
                 <br>
             </div>
