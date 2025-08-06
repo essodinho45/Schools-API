@@ -40,7 +40,7 @@
                 <img src="\images\iconwhite.png" style="max-height: 10vh; max-width: 10vw;" class="my-5">
             </div>
             <div class="text-white text-center text-lg font-bold" dir="rtl">
-                <p>أهلاً بكم في تطبيق ثانوية الشيخ بدر الدين الحسني</p>
+                <p>أهلاً بكم في تطبيق ثانوية العادل الشرعية</p>
                 <p>يرجى متابعة الفيديو التوضيحي لطريقة تنصيب وتفعيل البرنامج على نظامَي IOS و Android</p>
                 <br>
             </div>
