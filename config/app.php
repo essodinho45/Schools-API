@@ -125,7 +125,7 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
-    'api_base_url' => 'https://baderaldeenschool.com/api/',
+    'api_base_url' => 'https://aladelschool.com/api/',
 
     /*
     |--------------------------------------------------------------------------
