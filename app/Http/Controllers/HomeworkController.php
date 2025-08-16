@@ -405,10 +405,16 @@ class HomeworkController extends Controller
     public function getHomeworksRespondedByUserApi(Request $request)
     {
         try {
-            $homeworks = Homework::where('response', '<>', '')
+            $school_code = false;
+            if ($request->has('school_code')) {
+                $school_code = $request->input('school_code');
+            }
+            $homeworksQuery = Homework::where('response', '<>', '')
                 ->where('can_response', true)
-                ->where('response_read_by_admin', false)
-                ->orderBy('date', 'ASC')->get();
+                ->where('response_read_by_admin', false);
+            if($school_code)
+                $homeworksQuery->where('school-code', $school_code);
+            $homeworks = $homeworksQuery->orderBy('date', 'ASC')->get();
             foreach($homeworks as $homework)
             {
                 $homework->response_read_by_admin = true;
